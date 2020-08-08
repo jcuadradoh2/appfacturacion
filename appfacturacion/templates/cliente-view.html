@@ -1,0 +1,72 @@
+{% extends "menu.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {{Menu}} {% endblock %}</title>
+    {% load static %}
+    <!-- Bootstrap -->
+
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/bootstrap.min.js' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/font-awesome/css/font-awesome.min.css' %}">
+</head>
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="blue">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active " aria-current="page">{{ Menu }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="container">
+                <div class="card-content table-responsive">
+                    <div class="row justify-content-end">
+                        <a href="{% url 'guardarcliente' %}" class="btn btn-primary"
+                            style="margin: 5px; margin-right:18px"><b>Nuevo Cliente</b></a>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <caption>Lista de clientes</caption>
+                        <thead class="thead-dark">
+                            <th scope="col" class="text-center">ID</th>
+                            <th scope="col" class="text-center">Ruc</th>
+                            <th scope="col" class="text-center">Nombre</th>
+                            <th scope="col" class="text-center">Direccion</th>
+                            <th scope="col" class="text-center">Producto</th>
+                            <th scope="col" class="text-center">Accion</th>
+                        </thead>
+                        {% for c in clientes %}
+                        <tr>
+                            <th scope="row" class="text-center">{{ c.id }}</th>
+                            <td class="text-center">{{ c.ruc }}</td>
+                            <td class="text-center">{{ c.nombre }}</td>
+                            <td class="text-center">{{c.direccion}}</td>
+                            <td class="text-center">{{ c.producto__descripcion }}</td>
+                            <td style="width:230px" class="text-center">
+                                <a href="{% url 'editarcliente' c.id %}" class="btn btn-warning btn-xs">
+                                    <span class='fa fa-edit'>&nbsp;Editar</span>
+                                </a>
+                                <a href="{% url 'eliminarcliente' c.id %}" class="btn btn-danger btn-xs"
+                                    onclick="return confirm('¿Estas seguro de eliminar el registro?')">
+                                    <span class='fa fa-trash-o text-dark'>&nbsp;Eliminar</span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <p class='alert alert-danger'>Si No hay clientes registrados presenta esta alerta</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
