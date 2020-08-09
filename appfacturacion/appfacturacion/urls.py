@@ -19,12 +19,12 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', menu, name='index'),
+    #path('', menu, name='base'),
     #path('cliente/', cliente, name='cliente'),
     path('logout/', logout, name='logout'), 
     path('cliente_save/', cliente_save, name='guardarcliente'), 
     path('cliente_view/', cliente, name='listarcliente'), 
     path('cliente_delete/<int:id>', cliente_delete, name='eliminarcliente'),
     path('cliente_edit/<int:id>', cliente_edit, name='editarcliente'),
-    
+    path('', menu, name='index'), 
 ]

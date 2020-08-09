@@ -2,30 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout as do_logout
 from .forms import *
 from .models import *
+from datetime import datetime
+from django.db.models import Sum
+from django.db.models.functions import Coalesce
+
+
 # Create your views here.
 def menu(request):
-    opciones = {'Menu': 'Menu Principal',
-                'Contacto': 'Contacto del Blog', 'Acerca': 'Acerca del Blogs', 'Nombre':'Modulo de Facturacion'}
-
-    return render(request, 'menu.html', opciones)
+    data=[]    
+    year=datetime.now().year
+    for m in range(1,13):
+        total=DetalleFactura.objects.filter(creacion__year=year, creacion__month=m).aggregate(r=Coalesce(Sum('subtotal'),0)).get('r')
+        #total = DetalleFactura.objects.select_related('producto').filter(creacion__year=year, creacion__month=m).values('producto__descripcion').annotate(total=Sum('subtotal')).order_by('subtotal')
+        data.append(float(total))            
+        #data[total[0]]=total[1]
+    opciones = {'Menu': 'Dashboard','Nombre':'Modulo de Facturacion','data_chart': data, 'year':year}
+    return render(request, 'dashboard.html', opciones)
 
 def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('/')
-
+    return redirect('index')
 
 def cliente(request):
     c=Cliente.objects.select_related('producto').values('id', 'ruc', 'nombre', 'direccion', 'producto__descripcion')
-
-    opciones = {'Menu': 'Clientes',
-                'Contacto': 'Contacto del Blog', 'Acerca': 'Acerca del Blog', 'accion': 'Nuevo', 'clientes':c}    
+    opciones = {'Menu': 'Clientes','accion': 'Nuevo', 'clientes':c}    
     return render(request, 'cliente-view.html', opciones)   
 
 
 def cliente_save(request):
-    opciones = {'Menu': 'Agregar Clientes', 'accion': 'Guardar'}
+    opciones = {'Titulo': 'Agregar cliente', 'accion': 'Guardar'}
     # return HttpResponse('Contacto')
     if request.method == 'POST':
         # pass
@@ -58,3 +65,5 @@ def cliente_delete(request, id):
     if request.method == 'GET':
         cliente.delete()                
     return redirect('listarcliente')
+    
+
