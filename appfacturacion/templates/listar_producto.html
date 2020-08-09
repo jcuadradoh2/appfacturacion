@@ -26,31 +26,31 @@
             <div class="container">
                 <div class="card-content table-responsive">
                     <div class="row justify-content-end">
-                        <a href="{% url 'guardarcliente' %}" class="btn btn-primary"
-                            style="margin: 5px; margin-right:18px"><b>Nuevo Cliente</b></a>
+                        <a href="{% url 'guardarproducto' %}" class="btn btn-primary"
+                            style="margin: 5px; margin-right:18px"><b>Nuevo Producto</b></a>
                     </div>
                     <table class="table table-bordered table-hover">
-                        <caption>Lista de clientes</caption>
+                        <caption>Lista de productos</caption>
                         <thead class="thead-dark">
                             <th scope="col" class="text-center">ID</th>
-                            <th scope="col" class="text-center">Ruc</th>
-                            <th scope="col" class="text-center">Nombre</th>
-                            <th scope="col" class="text-center">Direccion</th>
-                            <th scope="col" class="text-center">Producto</th>
+                            <th scope="col" class="text-center">Descripcion</th>
+                            <th scope="col" class="text-center">Precio</th>
+                            <th scope="col" class="text-center">Stock</th>
+                            <th scope="col" class="text-center">iva</th>
                             <th scope="col" class="text-center">Accion</th>
                         </thead>
-                        {% for c in clientes %}
+                        {% for c in productos %}
                         <tr>
                             <th scope="row" class="text-center">{{ c.id }}</th>
-                            <td class="text-center">{{ c.ruc }}</td>
-                            <td class="text-center">{{ c.nombre }}</td>
-                            <td class="text-center">{{c.direccion}}</td>
-                            <td class="text-center">{{ c.producto__descripcion }}</td>
+                            <td class="text-center">{{ c.descripcion }}</td>
+                            <td class="text-center">{{ c.precio }}</td>
+                            <td class="text-center">{{c.stock}}</td>
+                            <td class="text-center">{{ c.iva }}</td>
                             <td style="width:230px" class="text-center">
-                                <a href="{% url 'editarcliente' c.id %}" class="btn btn-warning btn-xs">
+                                <a href="{% url 'editarproducto' c.id %}" class="btn btn-warning btn-xs">
                                     <span class='fa fa-edit'>&nbsp;Editar</span>
                                 </a>
-                                <a href="{% url 'eliminarcliente' c.id %}" class="btn btn-danger btn-xs"
+                                <a href="{% url 'eliminarproducto' c.id %}" class="btn btn-danger btn-xs"
                                     onclick="return confirm('¿Estas seguro de eliminar el registro?')">
                                     <span class='fa fa-trash-o text-dark'>&nbsp;Eliminar</span>
                                 </a>
@@ -62,7 +62,6 @@
             </div>
         </div>
 
-        <p class='alert alert-danger'>Si No hay clientes registrados presenta esta alerta</p>
     </div>
 </div>
 {% endblock %}
@@ -70,3 +69,16 @@
 {% block footer %}
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

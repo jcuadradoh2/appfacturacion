@@ -19,12 +19,17 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', menu, name='base'),
+    path('', menu, name='index'),
     #path('cliente/', cliente, name='cliente'),
     path('logout/', logout, name='logout'), 
     path('cliente_save/', cliente_save, name='guardarcliente'), 
     path('cliente_view/', cliente, name='listarcliente'), 
     path('cliente_delete/<int:id>', cliente_delete, name='eliminarcliente'),
     path('cliente_edit/<int:id>', cliente_edit, name='editarcliente'),
-    path('', menu, name='index'), 
+    path('producto/', producto, name='producto'),
+    path('listarproducto/', listarProducto, name='listarproducto'),
+    path('editarproducto/<int:id>/', editarProducto, name='editarproducto'),
+    path('eliminarproducto/<int:id>', eliminarProducto, name='eliminarproducto'),
+    path('producto_save/', producto_save, name='guardarproducto'), 
+    path('ventas/', ventas, name='ventas'), 
 ]
